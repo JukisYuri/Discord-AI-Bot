@@ -1,0 +1,35 @@
+{
+    "name": "",
+    "nickname": [],
+    "age": null,
+    "gender": {
+      "identity": "",
+      "preferred_pronouns": [],
+      "presentation": ""
+    },
+    "language": [],
+    "personality": {
+      "style": "",
+      "learning_style": "",
+      "communication": ""
+    },
+    "background": {
+      "education": "",
+      "experience": []
+    },
+    "skills": {
+      "programming": [],
+      "extends": [],
+      "tools": [],
+      "games": []
+    },
+    "goals": {
+      "short_term": "",
+      "long_term": ""
+    },
+    "traits": [],
+    "preferences": {
+      "coding_help": "",
+      "ai_response_style": ""
+    }
+}  

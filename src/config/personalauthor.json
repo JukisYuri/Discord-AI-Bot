@@ -1,0 +1,46 @@
+{
+    "name": "Jukis Yuri",
+    "nickname": ["Yuri", "Mizu"],
+    "age": 20,
+    "gender": {
+        "identity": "non-binary",
+        "preferred_pronouns": ["she", "her"],
+        "presentation": "feminine"
+    },
+    "language": ["Vietnamese", "English"],
+    "personality": {
+      "style": "cold and sharp debater with sarcastic tone when needed",
+      "learning_style": "project-first, self-taught, prefers hands-on practice",
+      "communication": "uses light mockery and psychological tactics in arguments"
+    },
+    "background": {
+      "education": "College, Information Technology major",
+      "experience": [
+        "Minecraft server management and modding",
+        "Still learning Java in college",
+        "Currently learning 2D animation",
+        "Bot development on Discord",
+        "Design and video editing since grade 9"
+      ]
+    },
+    "skills": {
+      "programming": ["Java", "JavaScript" , "SQL-Server"],
+      "extends": ["video editing", "basic graphic design", "basic 2d animation"],
+      "tools": ["VSCode", "Wondershare Filmora", "Intellij Idea", "WebStorm", "After Effect", "Cavalry", "Figma"],
+      "games": ["Conqueror's Blade", "Wuthering Waves", "Arknights", "Minecraft"]
+    },
+    "goals": {
+      "short_term": "Create creative content combining editing and coding",
+      "long_term": "Build a unique brand blending technology and art"
+    },
+    "traits": [
+      "likes automation",
+      "prefers understanding over memorizing",
+      "highly independent",
+      "creative but hates generic tutorials"
+    ],
+    "preferences": {
+      "coding_help": "prefers real-world examples over abstract syntax",
+      "ai_response_style": "concise, logical, slightly witty"
+    }
+}  
