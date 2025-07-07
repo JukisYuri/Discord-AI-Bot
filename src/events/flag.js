@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 let aiUsers = new Set();
 const pathLog = path.join(__dirname, '../config/AI_state.json')
+const c = require('ansi-colors')
 
 function loadAIState(){
     try {
@@ -9,7 +10,7 @@ function loadAIState(){
             const raw = fs.readFileSync(pathLog, 'utf-8')
             const ids = JSON.parse(raw)
             aiUsers = new Set(ids)
-            console.log(`Đã load ${aiUsers.size} user, đang trong trạng thái AI-Mode`)
+            console.log(`✅ Đã load ` + c.cyanBright(aiUsers.size) + ` users trong AI-Mode`)
         }
     } catch (error) {
         console.error(error)
@@ -24,7 +25,7 @@ function clearAllAIState(){
             const filePath = path.join(dir, file)
             fs.unlinkSync(filePath)
         }
-        console.log("Đã xoá toàn bộ dữ liệu của AI với người dùng")
+        console.log(c.redBright("Đã xoá toàn bộ dữ liệu của AI với người dùng"))
     } catch (error){
         console.error(error)
     }
@@ -41,11 +42,11 @@ function saveAIState() { // Hàm nội bộ, không dùng ở bên ngoài
 async function flagChecking(userId, checked) {
     if (checked){
         // AI Mode
-        console.log(`AI Mode is online for ${userId}`)
+        console.log(c.green(`AI Mode is online for ${userId}`))
         aiUsers.add(userId)
     } else {
         // Normal Mode
-        console.log(`AI Mode is offline for ${userId}`)
+        console.log(c.gray(`AI Mode is offline for ${userId}`))
         aiUsers.delete(userId)
     }
     saveAIState()

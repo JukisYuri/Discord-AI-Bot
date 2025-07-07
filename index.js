@@ -6,6 +6,9 @@ const path = require('path')
 const { modelAI } = require('./src/model/model')
 const { destinate_channel_Id } = require('./src/config/myconfig.json')
 const { whiteListAllowedCommands } = require('./src/config/allowedcommands')
+const { source_destinate_channel_Id } = require('./src/config/myconfig.json')
+const { trackLog } = require('./src/services/tracklog')
+const c = require('ansi-colors')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages, 
@@ -30,7 +33,7 @@ for(const file of commandFiles){
 client.once(Events.ClientReady, readyClient => {
     loadAIState()
     client.user.setActivity('Yuri, Xin chào chủ nhân', { type: ActivityType.Listening })
-	console.log(`Đã sẵn sàng! Logged với tư cách ${readyClient.user.tag}, Author: JukisYuri`);
+	console.log(c.green.bold.underline(`Logged với tư cách ${readyClient.user.tag}, Author: JukisYuri`))
 });
 
 client.on(Events.InteractionCreate, async interaction => {
@@ -52,21 +55,23 @@ client.on(Events.InteractionCreate, async interaction => {
 })
 
 client.on('messageCreate', async message => {
+    const messageText = message.content
     if (message.author.bot) return;
-    if (message.content.startsWith('/')) return;
+    if (messageText.startsWith('/')) return;
 
     const channelId = message.channel.id
     const userId = message.author.id
     const user = await client.users.fetch(userId)
     const aiStatus = await isAIMode(userId)
-    console.log(`[${aiStatus}] ${user.username}: ${message.content}`)
+    console.log(c.yellow(`[${aiStatus}]`) + ` ${user.username}: ${messageText}`)
+    await trackLog(aiStatus, user, messageText, source_destinate_channel_Id, client)
 
     if (aiStatus) {
       try {
-        if (channelId === destinate_channel_Id){
-            await modelAI(client, userId ,message.content)
+        if (channelId === destinate_channel_Id){ // xét có nhắn trùng kênh hay không
+            await modelAI(client, userId ,messageText)
         } else {
-            console.log(`Người dùng ${userId} (hay ${user.username}) không nhắn trùng kênh, nên AI đã bỏ qua tin nhắn ấy`)
+            console.log(c.yellow(`[skipped]`) + ` ${user.username}`)
         }
       } catch (err) {
         console.error('Lỗi AI:', err)
