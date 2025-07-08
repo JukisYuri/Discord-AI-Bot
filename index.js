@@ -9,6 +9,7 @@ const { whiteListAllowedCommands } = require('./src/config/allowedcommands')
 const { source_destinate_channel_Id } = require('./src/config/myconfig.json')
 const { trackLog } = require('./src/services/tracklog')
 const c = require('ansi-colors')
+const { preventMention, preventMentionEveryone, preventMentionRole } = require('./src/utils/prevent_mentions_users')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages, 
@@ -64,7 +65,12 @@ client.on('messageCreate', async message => {
     const user = await client.users.fetch(userId)
     const aiStatus = await isAIMode(userId)
     console.log(c.yellow(`[${aiStatus}]`) + ` ${user.username}: ${messageText}`)
-    await trackLog(aiStatus, user, messageText, source_destinate_channel_Id, client)
+
+    // TrackLog
+    preventMention(message)
+    preventMentionEveryone(message)
+    preventMentionRole(message)
+    await trackLog(aiStatus, user, message, source_destinate_channel_Id, client)
 
     if (aiStatus) {
       try {

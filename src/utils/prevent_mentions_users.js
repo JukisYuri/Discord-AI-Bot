@@ -1,3 +1,4 @@
+// Truyền biến msg gốc, thay vì msg.content
 function preventMention(msg){
     if (msg.mentions.users.size > 0) { 
         msg.mentions.users.forEach((user) => {
