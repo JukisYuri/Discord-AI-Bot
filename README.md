@@ -4,8 +4,8 @@
 3. [Cách sử dụng](#cách-sử-dụng)
 
 ## Thông tin
-  Bot được làm bởi JukisYuri, Project thứ 2
-  Được viết bởi sinh viên năm 2 vẫn đang học trong trường, nên sẽ còn nhiều sai sót
+  Bot được làm bởi JukisYuri, Project thứ 2 và
+  được viết bởi sinh viên năm 2 vẫn đang học trong trường, nên sẽ còn nhiều sai sót
   
 ## Cấu hình Discord-Bot
 1. Tải (hoặc clone) repo này về
