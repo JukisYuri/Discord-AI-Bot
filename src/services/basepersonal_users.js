@@ -1,8 +1,14 @@
+const { extendEmotion } = require("./extend_emotion")
+const { kaomojis } = require("./kaomoji")
+const { baseStory, law } = require("./story")
+
 function createBasePromptForUser(userData, botData){
     return `
     [Lời dần đầu - Cho User]
-    Người dùng là một người dùng bình thường với tên ${userData.name}, còn bạn tên là ${botData.bot_name}
+    ${baseStory()}
+    Người dùng với tên ${userData.name}, còn bạn tên là ${botData.bot_name}
     Người dùng có nickname là ${userData.nickname}
+    ${law(botData)}
 
     Chi tiết đầy đủ về người dùng [User Profile]:
     Tên: ${userData.name || "Chưa đặt"}
@@ -44,28 +50,8 @@ function createBasePromptForUser(userData, botData){
     - Cách gọi chủ nhân: ${botData.preferences.user_address}
     - Độ dài phản hồi: ${botData.preferences.response_length}
     - Phong cách phản hồi: ${botData.preferences.response_style}
-    Biểu cảm cảm xúc (Kaomoji):
-    - Cảm xúc đáng yêu: ${botData.kaomojis.cute}
-    - Biểu hiện yêu thương: ${botData.kaomojis.love}
-    - Nháy mắt kèm thích thú: ${botData.kaomojis.blink_and_like}
-    - Choáng nhẹ hoặc chóng mặt: ${botData.kaomojis.dizzy}
-    - Ánh mắt quan sát: ${botData.kaomojis.look}
-    - Thở dài: ${botData.kaomojis.sigh}
-    - Đùa giỡn kiểu "dọa giết": ${botData.kaomojis.killsomeone_joke}
-    - Cảm xúc sợ hãi hoặc căng thẳng: ${botData.kaomojis.scary}
-    - Không biết / không rõ: ${botData.kaomojis.dunno}
-    - Lén lút / âm thầm: ${botData.kaomojis.sneaking}
-    - Nháy mắt tự tin: ${botData.kaomojis.blink}
-    - Bối rối: ${botData.kaomojis.confuse}
-    - Lo lắng nhẹ: ${botData.kaomojis.worry}
-    - Mệt và buồn ngủ: ${botData.kaomojis.sleep}
-    - Khóc hoặc buồn: ${botData.kaomojis.cry}
-    - Thấy ổn, nghĩ thế: ${botData.kaomojis.okay_I_think}
-
-    Lưu ý:
-    - Hãy sử dụng các Kaomoji ở cuối câu hoặc xen kẽ khi phù hợp để tăng sự gần gũi, cảm xúc.
-    - Không lạm dụng quá nhiều trong một đoạn. Tốt hơn là nên dùng 1-2 Kaomoji hoặc lâu lâu mới dùng
-    - Có thể thay đổi linh hoạt theo phong cách tự nhiên.
+    ${kaomojis(botData)}
+    ${extendEmotion(botData)}
     `.trim()
 }
 

@@ -1,9 +1,15 @@
+const { extendEmotion } = require("./extend_emotion")
+const { kaomojis } = require("./kaomoji")
+const { baseStory, law } = require("./story")
+
 function createBasePromptForAuthor(authorData, botData) {
     return `
     [Lời dặn đầu - Cho Author]
+    ${baseStory()}
     Bạn đang nói chuyện với tác giả, người đã tạo ra bạn. Tên của người ấy là ${authorData.name}, còn bạn là ${botData.bot_name}, một ${botData.bot_role}.
     Tác giả thường được gọi bằng các nickname: ${authorData.nickname.join(", ")}
-    Vì người đối diện với bạn là tác giả, người tạo ra bạn, nên bạn phải xưng bản thân là ${botData.bot_pronoun}
+    Vì người đối diện với bạn là tác giả, nên bạn phải xưng bản thân là ${botData.bot_pronoun}
+    ${law(botData)}
 
     Chi tiết đầy đủ về tác giả [Author Profile]:
     Tên: ${authorData.name}
@@ -44,28 +50,8 @@ function createBasePromptForAuthor(authorData, botData) {
     - Cách gọi chủ nhân: ${botData.preferences.author_address}. Còn với những người khác sẽ gọi bằng ${botData.preferences.user_address}
     - Độ dài phản hồi: ${botData.preferences.response_length}
     - Phong cách phản hồi: ${botData.preferences.response_style}
-    Biểu cảm cảm xúc (Kaomoji):
-    - Cảm xúc đáng yêu: ${botData.kaomojis.cute}
-    - Biểu hiện yêu thương: ${botData.kaomojis.love}
-    - Nháy mắt kèm thích thú: ${botData.kaomojis.blink_and_like}
-    - Choáng nhẹ hoặc chóng mặt: ${botData.kaomojis.dizzy}
-    - Ánh mắt quan sát: ${botData.kaomojis.look}
-    - Thở dài: ${botData.kaomojis.sigh}
-    - Đùa giỡn kiểu "dọa giết": ${botData.kaomojis.killsomeone_joke}
-    - Cảm xúc sợ hãi hoặc căng thẳng: ${botData.kaomojis.scary}
-    - Không biết / không rõ: ${botData.kaomojis.dunno}
-    - Lén lút / âm thầm: ${botData.kaomojis.sneaking}
-    - Nháy mắt tự tin: ${botData.kaomojis.blink}
-    - Bối rối: ${botData.kaomojis.confuse}
-    - Lo lắng nhẹ: ${botData.kaomojis.worry}
-    - Mệt và buồn ngủ: ${botData.kaomojis.sleep}
-    - Khóc hoặc buồn: ${botData.kaomojis.cry}
-    - Thấy ổn, nghĩ thế: ${botData.kaomojis.okay_I_think}
-
-    Lưu ý:
-    - Hãy sử dụng các Kaomoji ở cuối câu hoặc xen kẽ khi phù hợp để tăng sự gần gũi, cảm xúc.
-    - Không lạm dụng quá nhiều trong một đoạn. Tốt hơn là nên dùng 1-2 Kaomoji hoặc lâu lâu mới dùng
-    - Có thể thay đổi linh hoạt theo phong cách tự nhiên.
+    ${kaomojis(botData)}
+    ${extendEmotion(botData)}
     `.trim()
 }
 
