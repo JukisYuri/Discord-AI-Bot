@@ -17,6 +17,12 @@
 
 ## Cách sử dụng
 1. Tệp index.js là tệp chính để khởi động con bot trong Discord
-2. Tệp deploy-commands dùng để update thêm các commands-slash bạn muốn thêm vào những lệnh mới (vì Discord không tự update commands-slash cho bạn)
-3. Bạn có thể tự mình tiếp tục phát triển thêm dự án của chủ sở hữu hoặc contribute
-4. Sử dụng /help để biết thêm thông tin chi tiết, hoặc mò trong tutorial.js file (ở events package)
+   ```sh
+   node index.js
+   ```
+3. Tệp deploy-commands dùng để update thêm các commands-slash bạn muốn thêm vào những lệnh mới (vì Discord không tự update commands-slash cho bạn)
+   ```sh
+   node deploy-commands.js
+   ```
+4. Bạn có thể tự mình tiếp tục phát triển thêm dự án của chủ sở hữu hoặc contribute
+5. Sử dụng /help để biết thêm thông tin chi tiết, hoặc mò trong tutorial.js file (ở events package)
