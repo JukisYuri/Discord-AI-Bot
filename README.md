@@ -9,8 +9,17 @@
   
 ## Cấu hình Discord-Bot
 1. Tải (hoặc clone) repo này về
-2. Trong file src/config/myconfig, hãy setup toàn bộ config bao gồm bot token, gemini token,...
-3. Cài đặt các Dependencies từ file package
+2. Trong file src/config/myconfig, hãy setup toàn bộ config bao gồm bot token, gemini token,... (uhm thì đôi lúc đứa chủ repo lần đầu dùng github lỡ xoá luôn myconfig thì thông cảm...
+   ```sh
+    "bot_token": "<DISCORD-TOKEN-BOT>",
+    "clientId": "<BOT-ID>",
+    "guildId": "<GUILD-ID>",
+    "destinate_channel_Id": "<ID-KÊNH-ĐÍCH>",
+    "source_destinate_channel_Id": "<ID-KÊNH-LOG>",
+    "gemini_api_token": "<GEMINI-API-TOKEN>",
+    "authorId": "607183227911667746"
+   ```
+4. Cài đặt các Dependencies từ file package
   ```sh
   npm install 
   ``` 
