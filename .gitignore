@@ -1,5 +1,6 @@
 node_modules
 .idea
 src/database/
+src/config/myconfig.json
 src/config/AI_state.json
 !src/database/trackinglog.jsonl
