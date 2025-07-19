@@ -1,0 +1,9 @@
+{
+    "bot_token": "<DISCORD-TOKEN-BOT>",
+    "clientId": "<BOT-ID>",
+    "guildId": "<GUILD-ID>",
+    "destinate_channel_Id": "<ID-KÊNH-ĐÍCH>",
+    "source_destinate_channel_Id": "<ID-KÊNH-LOG>",
+    "gemini_api_token": "<GEMINI-API-TOKEN>",
+    "authorId": "607183227911667746"
+}
