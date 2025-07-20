@@ -36,3 +36,6 @@
 4. Bạn có thể tự mình tiếp tục phát triển thêm dự án của chủ sở hữu hoặc contribute
 5. Sử dụng /help để biết thêm thông tin chi tiết, hoặc mò trong tutorial.js file (ở events package)
 6. About My Bot: https://www.facebook.com/yourlifehehe/videos/1091520079571724
+
+<img width="1134" height="522" alt="image" src="https://github.com/user-attachments/assets/2389c6a6-7043-4bb2-b977-1175650fc0d5" />
+
