@@ -14,7 +14,7 @@
     "bot_token": "<DISCORD-TOKEN-BOT>",
     "clientId": "<BOT-ID>",
     "guildId": "<GUILD-ID-NƠI-SỬ-DỤNG-BOT>",
-    "destinate_channel_Id": "<ID-KÊNH-ĐÍCH>",
+    "destinate_channel_Id": "<ID-KÊNH-NƠI-ĐỂ-AI-NHẮN>",
     "source_destinate_channel_Id": "<ID-KÊNH-LOG>",
     "gemini_api_token": "<GEMINI-API-TOKEN>",
     "authorId": "607183227911667746"
