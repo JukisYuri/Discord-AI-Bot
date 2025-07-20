@@ -35,3 +35,4 @@
    ```
 4. Bạn có thể tự mình tiếp tục phát triển thêm dự án của chủ sở hữu hoặc contribute
 5. Sử dụng /help để biết thêm thông tin chi tiết, hoặc mò trong tutorial.js file (ở events package)
+6. About My Bot: https://www.facebook.com/yourlifehehe/videos/1091520079571724
