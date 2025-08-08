@@ -8,6 +8,6 @@ module.exports = {
     async execute(interaction){
         const userId = interaction.user.id
         const msg = await helpCommands(userId)
-        await interaction.reply(`**Đây là danh sách các Commands** ${msg}`)
+        await interaction.reply({ embeds: [msg] })
     },
 }

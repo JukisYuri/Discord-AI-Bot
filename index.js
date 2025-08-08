@@ -62,9 +62,12 @@ client.on('messageCreate', async message => {
 
     const channelId = message.channel.id
     const userId = message.author.id
+    const guildId = message.guild.id
     const user = await client.users.fetch(userId)
     const aiStatus = await isAIMode(userId)
-    console.log(c.yellow(`[${aiStatus}]`) + ` ${user.username}: ${messageText}`)
+    const guild = await client.guilds.fetch(guildId)
+    const channel = await client.channels.fetch(channelId)
+    console.log(c.yellow(`[${aiStatus}]`) + c.cyan(`[${guild} - ${channel.name}]`) + ` ${user.username}: ${messageText}`)
 
     // TrackLog
     preventMention(message)
@@ -73,16 +76,23 @@ client.on('messageCreate', async message => {
     await trackLog(aiStatus, user, message, source_destinate_channel_Id, client)
 
     if (aiStatus) {
+    let matched = false
       try {
-        if (channelId === destinate_channel_Id){ // xét có nhắn trùng kênh hay không
-            await modelAI(client, userId ,messageText)
-        } else {
+        for (const chunkChannel of destinate_channel_Id){
+            if (channelId === chunkChannel){ // xét có nhắn trùng kênh hay không
+                await message.react('🎐')
+                await modelAI(client, userId ,messageText, chunkChannel)
+                matched = true
+                break;
+            }
+        }
+        if (!matched) {
             console.log(c.yellow(`[skipped]`) + ` ${user.username}`)
         }
       } catch (err) {
         console.error('Lỗi AI:', err)
       }
     }
-  })
+})
 
 client.login(bot_token);
