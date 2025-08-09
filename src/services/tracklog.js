@@ -1,11 +1,11 @@
 const fs = require('fs')
 const { DateTime } = require('luxon')
 
-async function trackLog(aiStatus, user, message, destinateChannelId, client) {
+async function trackLog(guild, channel, aiStatus, user, message, destinateChannelId, client) {
     try {
     const messageContent = message.content
     const destinateChannel = await client.channels.fetch(destinateChannelId)
-    const baseContext = `[${aiStatus}] ${user.username}: ${messageContent}`
+    const baseContext = `[${guild}] **${user.username}**: ${messageContent}`
     let attachmentLinks = null
     if (destinateChannel.isTextBased()){
         if (message.attachments.size > 0) {
@@ -14,26 +14,40 @@ async function trackLog(aiStatus, user, message, destinateChannelId, client) {
         } else {
             await destinateChannel.send(`${baseContext}`) 
         }
-        await takeLogToJson(aiStatus, user, messageContent, attachmentLinks)
+        await appendGuildLogToJson(guild, channel, user, messageContent, attachmentLinks)
+        await appendAILogToJson(aiStatus, user)
         }
     } catch (err) {
         console.error(err)
     }
 }
 
-async function takeLogToJson(aiStatus, user, messageContent, attachmentLinks) {
+async function appendAILogToJson(aiStatus, user) {
     try {
-    const logEntry = {
-        status: aiStatus,
-        user: user.username,
-        timestamp: DateTime.now().setZone("Asia/Ho_Chi_Minh").toISO(),
-        message: messageContent,
-        attachments: attachmentLinks
-    }
-    fs.appendFileSync('./src/database/trackinglog.jsonl', JSON.stringify(logEntry) + '\n')
+        let logAIEntry = {
+            status: aiStatus,
+            user: user.username,
+            timestamp: DateTime.now().setZone("Asia/Ho_Chi_Minh").toISO(),
+        }
+    fs.appendFileSync('./src/database/trackinglog.jsonl', JSON.stringify(logAIEntry) + '\n')
     } catch (err){
-    console.error(err)
+        console.error(err)
     }
 }
 
-module.exports = { trackLog, takeLogToJson }
+async function appendGuildLogToJson(guild, channel, user, messageContent, attachmentLinks){
+    try {
+        let logGuildEntry = {
+            server: `${guild} - ${channel.name}`,
+            user: user.username,
+            timestamp: DateTime.now().setZone("Asia/Ho_Chi_Minh").toISO(),
+            message: messageContent,
+            ...(attachmentLinks !== null && { attachments: attachmentLinks })
+        }
+    fs.appendFileSync('./src/database/trackinglog2.jsonl', JSON.stringify(logGuildEntry) + '\n')
+    } catch (err){
+        console.error(err)
+    }
+}
+
+module.exports = { trackLog, appendAILogToJson, appendGuildLogToJson }

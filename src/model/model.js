@@ -23,6 +23,7 @@ const personalAuthor = JSON.parse(fs.readFileSync(pathAuthor), 'utf-8')
 const genAI = new GoogleGenerativeAI(gemini_api_token)
 
 async function modelAI(client, userId, textInput, chunkChannel) {
+    const start = Date.now()
     let retries = 3
     const selectSystemInstruction = userId === authorId ? createBasePromptForAuthor(personalAuthor, personalBot) : createBasePromptForUser(personalUser, personalBot)
 
@@ -55,11 +56,13 @@ async function modelAI(client, userId, textInput, chunkChannel) {
         const result = await model.generateContent({contents: memoryLog})
         const response = result.response
         const text = response.text()
+        const elapsed = (Date.now() - start) / 1000
+        const modelTextSliced = model.model.slice(7)
 
         if (text.length > 0){
           const chunkMessages = splitMessage(text)
           for (const chunk of chunkMessages){
-            await channel.send(chunk)
+            await channel.send(`${chunk}\n\n*> ${elapsed}s | ${modelTextSliced}*`)
           }
           writeMemoryLog({
             userId,
