@@ -34,7 +34,7 @@ for(const file of commandFiles){
 
 client.once(Events.ClientReady, readyClient => {
     loadAIState()
-    client.user.setActivity('Yuri, Xin chào chủ nhân', { type: ActivityType.Listening })
+    client.user.setActivity('Khởi đầu với /open-chat để nhắn nhá', { type: ActivityType.Listening })
 	console.log(c.green.bold.underline(`Logged với tư cách ${readyClient.user.tag}, Author: JukisYuri`))
     responeTerminal(client)
 });

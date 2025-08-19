@@ -16,6 +16,7 @@ async function trackLog(guild, channel, aiStatus, user, message, destinateChanne
         }
         await appendGuildLogToJson(guild, channel, user, messageContent, attachmentLinks)
         await appendAILogToJson(aiStatus, user)
+        await detectChannelId(channel)
         }
     } catch (err) {
         console.error(err)
@@ -50,4 +51,31 @@ async function appendGuildLogToJson(guild, channel, user, messageContent, attach
     }
 }
 
-module.exports = { trackLog, appendAILogToJson, appendGuildLogToJson }
+async function detectChannelId(channel) {
+    try {
+        let logChannelId = {
+            channel: `${channel.name}`,
+            ID: `${channel.id}`
+        }
+        const filePath = './src/database/channelId.jsonl'
+        if (!fs.existsSync(filePath)){
+            fs.writeFileSync(filePath, '')
+        }
+        const lines = fs.readFileSync('./src/database/channelId.jsonl', 'utf8').split('\n').filter(Boolean)
+        let exist = false
+        for (const line of lines){
+            const obj = JSON.parse(line)
+            if (logChannelId.ID === obj.ID){
+                exist = true
+                break;
+            }
+        }
+        if (!exist){
+            fs.appendFileSync('./src/database/channelId.jsonl', JSON.stringify(logChannelId) + '\n')
+        }
+    } catch (err){
+        console.error(err)
+    }
+}
+
+module.exports = { trackLog, appendAILogToJson, appendGuildLogToJson, detectChannelId }
