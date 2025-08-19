@@ -13,7 +13,8 @@ const foldersToRead = [
 const fileOutSrcToRead = [
     { nameFile: 'index', path: path.join(__dirname, '..', '..', 'index.js')},
     { nameFile: 'deploy-commands', path: path.join(__dirname, '..', '..', 'deploy-commands.js')},
-    { nameFile: 'trackingGuildLog', path: path.join(__dirname, '..', '..', 'src', 'database', 'trackinglog2.jsonl')}
+    { nameFile: 'trackingGuildLog', path: path.join(__dirname, '..', '..', 'src', 'database', 'trackinglog2.jsonl')},
+    { nameFile: 'channelIdLog', path: path.join(__dirname, '..', '..', 'src', 'database', 'channelId.jsonl')}
 ]
 
 async function getAllFilesFromCodeBase(){
