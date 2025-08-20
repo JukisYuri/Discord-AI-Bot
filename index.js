@@ -10,7 +10,7 @@ const { source_destinate_channel_Id } = require('./src/config/myconfig.json')
 const { trackLog } = require('./src/services/tracklog')
 const c = require('ansi-colors')
 const { preventMention, preventMentionEveryone, preventMentionRole } = require('./src/utils/prevent_mentions_users')
-const { responeTerminal } = require('./src/utils/responebyterminal')
+// const { responeTerminal } = require('./src/utils/responebyterminal')
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages, 
@@ -36,7 +36,7 @@ client.once(Events.ClientReady, readyClient => {
     loadAIState()
     client.user.setActivity('Khởi đầu với /open-chat để nhắn nhá', { type: ActivityType.Listening })
 	console.log(c.green.bold.underline(`Logged với tư cách ${readyClient.user.tag}, Author: JukisYuri`))
-    responeTerminal(client)
+    // responeTerminal(client)
 });
 
 client.on(Events.InteractionCreate, async interaction => {

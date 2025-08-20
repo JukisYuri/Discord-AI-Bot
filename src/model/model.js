@@ -9,7 +9,7 @@ const { createBasePromptForUser } = require('../services/basepersonal_users')
 const { authorId } = require('../config/myconfig.json')
 const { createBasePromptForAuthor } = require('../services/basepersonal_author')
 const { getAllFilesFromCodeBase, getAllContentOutOfSrc } = require('../config/codebase')
-const { getFlagCheck } = require('../events/flagcodebase')
+const { getFlagCheck, setFlagCheck } = require('../events/flagcodebase')
 
 // --------
 const pathUser = path.join(__dirname, '../config/personaluser.json')
@@ -25,10 +25,12 @@ const genAI = new GoogleGenerativeAI(gemini_api_token)
 async function modelAI(client, userId, textInput, chunkChannel) {
     const start = Date.now()
     let retries = 3
+    while (retries--){
     const selectSystemInstruction = userId === authorId ? createBasePromptForAuthor(personalAuthor, personalBot) : createBasePromptForUser(personalUser, personalBot)
 
     let codeBaseContext = "Không có thông tin"
     let codeBaseContentOutOfSrc = "Không có thông tin"
+    try {
     if (getFlagCheck() === true){
       if (userId === authorId){
         const files = await getAllFilesFromCodeBase()
@@ -37,7 +39,6 @@ async function modelAI(client, userId, textInput, chunkChannel) {
         codeBaseContentOutOfSrc = filesOutOfSrc.map(f => `📄 ${f.file}\n${f.content}`).join('\n\n')
       }
     }
-
     const model = genAI.getGenerativeModel({
       model: "gemini-2.5-flash",
       systemInstruction : `${selectSystemInstruction}\n\n 
@@ -47,8 +48,6 @@ async function modelAI(client, userId, textInput, chunkChannel) {
     })
     const memoryLog = getMemoryLog(userId, 20)
     const channel = await client.channels.fetch(chunkChannel)
-      while (retries--){
-        try {
           memoryLog.push({
             role: "user",
             parts: [{ text: textInput }]
@@ -72,10 +71,15 @@ async function modelAI(client, userId, textInput, chunkChannel) {
         }
         return;
       } catch (error){
-        if (error.status == 503 && retries > 0) {
-          console.warn("Phía Gemini Server bị quá tải")   
-          await new Promise(res => setTimeout(res, 2000))
-          continue; 
+      if (error.status == 503 && retries > 0) {
+        console.warn("Phía Gemini Server bị quá tải")   
+        await new Promise(res => setTimeout(res, 2000))
+        continue; 
+      }
+      if (error.status == 429){
+        console.warn("Tràn output, nên sẽ cho hầu gái không nhớ codebase")
+        setFlagCheck(false)
+        continue; // quay lại từ đầu chạy với việc false remember
       }
       console.error(error)
       await channel.send("AI bị ngu rồi, thông cảm, hãy thử lại xem")
